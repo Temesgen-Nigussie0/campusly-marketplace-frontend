@@ -71,15 +71,15 @@ function LoginPageInner() {
         <div className="relative z-10 max-w-2xl space-y-6 my-auto pt-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-indigo-300">
             <Sparkles size={14} className="text-amber-400 animate-pulse" />
-            <span>Welcome back to Campusly</span>
+            <span>እንኳን ወደ Campusly በደህና መጡ</span>
           </div>
 
           <h1 className="text-4xl lg:text-5xl font-extrabold font-heading text-white leading-tight tracking-tight">
-            በር ይክፈቱ Unlock shared academic knowledge across campus.
+            የሚፈልጉትን የትምህርት ፋይሎት በአንድ ቦታ ላይ!! ይግዙ ያጋሩ ያግኙ ከተማሪዎች ለተማሪዎች የተሰራ.
           </h1>
 
           <p className="text-base lg:text-lg text-slate-300/90 font-normal leading-relaxed">
-            Access lecture notes, past exam solutions, and study guides created and verified by top students.
+            የትምህርት ኖቶችን፣ ቀደም ያሉ የፈተና ጥያቄዎችን እናም የጥናት መጻህፍቶችን ከተማሪዎች ያግኙ!
           </p>
 
           {/* Value Props Pills */}
@@ -88,26 +88,26 @@ function LoginPageInner() {
               <div className="w-7 h-7 rounded-lg bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-300">
                 <ShieldCheck size={16} />
               </div>
-              <span>Verified Student Badges</span>
+              <span>እውቅናቸው ከተረጋገጡ ተማሪዎች</span>
             </div>
             <div className="flex items-center gap-2.5 text-xs font-medium text-slate-300">
               <div className="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
                 <BookOpen size={16} />
               </div>
-              <span>Course-Specific Materials</span>
+              <span>የሚፈልጉትን ኮርሶች</span>
             </div>
             <div className="flex items-center gap-2.5 text-xs font-medium text-slate-300">
               <div className="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300">
                 <Sparkles size={16} />
               </div>
-              <span>Instant File Downloads</span>
+              <span>ፈጣን መተግበሪያ</span>
             </div>
           </div>
         </div>
 
         {/* Footer Quote */}
         <div className="relative z-10 flex items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-6">
-          <span>&copy; {new Date().getFullYear()} Campusly Marketplace Inc.</span>
+          <span>2018 ዓ/ም  Campusly Marketplace </span>
           <div className="flex gap-4">
             <Link href="/" className="hover:text-white transition-colors">Marketplace</Link>
             <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
@@ -130,8 +130,7 @@ function LoginPageInner() {
 
           <div>
             <h2 className="text-3xl font-extrabold font-heading text-text-primary dark:text-gray-100 tracking-tight">
-              Sign In
-            </h2>
+              ይግቡ            </h2>
             <p className="text-sm text-text-muted mt-2">
               Enter your university credentials to access your account.
             </p>
@@ -204,9 +203,9 @@ function LoginPageInner() {
 
           <div className="pt-4 border-t border-border-soft dark:border-border-dark text-center">
             <p className="text-sm text-text-muted">
-              Don&apos;t have an account yet?{" "}
+              አካውንት የለዎትም?{" "}
               <Link href="/register" className="text-brand-indigo font-bold hover:underline inline-flex items-center gap-1">
-                Create Account <ArrowRight size={14} />
+                ይመዝገቡ <ArrowRight size={14} />
               </Link>
             </p>
           </div>
