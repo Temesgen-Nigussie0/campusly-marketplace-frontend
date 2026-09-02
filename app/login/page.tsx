@@ -75,7 +75,7 @@ function LoginPageInner() {
           </div>
 
           <h1 className="text-4xl lg:text-5xl font-extrabold font-heading text-white leading-tight tracking-tight">
-            Unlock shared academic knowledge across campus.
+            በር ይክፈቱ Unlock shared academic knowledge across campus.
           </h1>
 
           <p className="text-base lg:text-lg text-slate-300/90 font-normal leading-relaxed">
