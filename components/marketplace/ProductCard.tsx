@@ -11,8 +11,6 @@ import {
   Play,
   Star,
   User,
-  GraduationCap,
-  Layers,
   ArrowUpRight
 } from "lucide-react";
 import { Product, ProductType } from "@/lib/types";
@@ -86,21 +84,15 @@ export function ProductCard({ product }: ProductCardProps) {
             </span>
           </div>
 
-          {/* Top Right Badges: Your Listing / Featured */}
-          <div className="absolute top-2.5 right-2.5 flex flex-col items-end gap-1 z-10">
-            {isMine && (
+          {/* Top Right: Your Listing (if applicable) - No featured star */}
+          {isMine && (
+            <div className="absolute top-2.5 right-2.5 z-10">
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-bold leading-tight bg-[#2E3192] text-white shadow-md border border-indigo-400/30">
                 <User size={10} className="text-white" />
                 <span>Your Listing</span>
               </span>
-            )}
-            {product.isFeatured && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-bold bg-[#F5A623] text-gray-950 shadow-md border border-amber-300/40">
-                <Star size={10} fill="currentColor" />
-                <span>Featured</span>
-              </span>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Bottom rating & department overlay */}
           <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white/90 z-10 text-[10px] font-medium">
@@ -119,28 +111,16 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Card Body */}
         <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between gap-3">
           <div>
-            {/* Category tag */}
-            <div className="flex items-center justify-between gap-1 mb-1">
-              <span className="text-[10px] sm:text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
-                {product.category}
-              </span>
-              {product.seller.university && (
-                <span className="text-[10px] text-gray-400 dark:text-gray-500 truncate max-w-[120px]">
-                  {product.seller.university.split("(")[0].trim()}
-                </span>
-              )}
-            </div>
-
-            {/* Title - Clean 2-line clamp */}
+            {/* Title - Clean 2-line clamp without purple category tag */}
             <h3 className="text-xs sm:text-[13px] md:text-sm font-bold font-heading text-gray-900 dark:text-gray-100 leading-snug line-clamp-2 group-hover:text-[#2E3192] dark:group-hover:text-indigo-400 transition-colors">
               {product.title}
             </h3>
           </div>
 
           {/* Habesha Student Seller Section */}
-          <div className="pt-2.5 border-t border-[#E5E5E0] dark:border-[#26282E]/80 flex flex-col gap-2">
+          <div className="pt-2.5 border-t border-[#E5E5E0] dark:border-[#26282E]/80 flex flex-col gap-2.5">
             <div className="flex items-center justify-between gap-2">
-              {/* Seller details */}
+              {/* Seller details (No 3 listings / 8 listings box) */}
               <div className="flex items-center gap-2 min-w-0 flex-1">
                 <div className="relative flex-shrink-0">
                   <img
@@ -163,36 +143,23 @@ export function ProductCard({ product }: ProductCardProps) {
                   </div>
                   <div className="flex items-center gap-1.5 text-[10px] text-gray-500 dark:text-gray-400">
                     <span className="truncate">@{product.seller.username}</span>
+                    {product.seller.university && (
+                      <span className="truncate hidden sm:inline text-gray-400 dark:text-gray-500">
+                        • {product.seller.university.split("(")[0].trim()}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
-
-              {/* Multiple listings indicator */}
-              {product.seller.listingsCount && product.seller.listingsCount > 1 ? (
-                <span
-                  title={`${product.seller.name} has ${product.seller.listingsCount} active listings`}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60 flex-shrink-0"
-                >
-                  <Layers size={10} className="text-indigo-600 dark:text-indigo-400" />
-                  <span>{product.seller.listingsCount} listings</span>
-                </span>
-              ) : (
-                <span className="text-[10px] text-gray-400 dark:text-gray-500 flex-shrink-0">
-                  1 listing
-                </span>
-              )}
             </div>
 
-            {/* Bottom Row: Price & Rounded CTA Button */}
+            {/* Bottom Row: Price (NO "Price" label) & Rounded CTA Button */}
             <div className="flex items-center justify-between pt-2 border-t border-dashed border-gray-100 dark:border-gray-800">
-              <div className="flex flex-col">
-                <span className="text-[9px] uppercase tracking-wider text-gray-400 font-bold">Price</span>
-                <span className="text-sm sm:text-base font-extrabold text-[#2E3192] dark:text-indigo-400 font-heading">
-                  {formatPrice(product.price)}
-                </span>
-              </div>
+              <span className="text-sm sm:text-base font-extrabold text-[#2E3192] dark:text-indigo-400 font-heading">
+                {formatPrice(product.price)}
+              </span>
 
-              <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-gray-100 hover:bg-[#2E3192] text-gray-800 hover:text-white dark:bg-gray-800 dark:hover:bg-indigo-600 dark:text-gray-200 dark:hover:text-white transition-all duration-200 group-hover:bg-[#2E3192] group-hover:text-white">
+              <div className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-gray-100 hover:bg-[#2E3192] text-gray-800 hover:text-white dark:bg-gray-800 dark:hover:bg-indigo-600 dark:text-gray-200 dark:hover:text-white transition-all duration-200 group-hover:bg-[#2E3192] group-hover:text-white">
                 <span>View</span>
                 <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>

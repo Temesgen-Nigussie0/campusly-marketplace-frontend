@@ -203,8 +203,8 @@ function MarketplaceFeedInner() {
           </div>
         </div>
 
-        {/* Full-Width Stretched Hero Banner */}
-        <div className="w-full px-3 sm:px-5 lg:px-8 pt-2.5 pb-1 max-w-[1550px] mx-auto">
+        {/* Full-Bleed Edge-to-Edge Hero Banner */}
+        <div className="w-full mb-3">
           <FeaturedHero products={products.length > 0 ? products : MOCK_PRODUCTS} />
         </div>
 
@@ -212,13 +212,14 @@ function MarketplaceFeedInner() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           {/* Marketplace Browse Bar & Filters */}
           <div id="materials-feed" className="mb-3 pt-1">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+              <div className="flex items-center gap-2.5 flex-wrap">
                 <h1 className="text-xl sm:text-2xl font-extrabold font-heading tracking-tight text-gray-900 dark:text-gray-100">
                   Academic Marketplace
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-50 dark:bg-indigo-950/60 text-[#2E3192] dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-800/40">
-                  {sorted.length} verified materials
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 dark:bg-indigo-950/60 text-[#2E3192] dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60 shadow-2xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>{sorted.length} verified materials</span>
                 </span>
               </div>
               <p className="text-gray-500 dark:text-gray-400 text-xs hidden sm:block">

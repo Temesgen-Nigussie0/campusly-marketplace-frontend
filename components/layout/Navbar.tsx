@@ -22,6 +22,8 @@ import {
   Menu,
   Plus,
   X,
+  LogIn,
+  UserPlus,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/contexts/AuthContext";
@@ -260,18 +262,24 @@ export function Navbar({ onSearch, searchValue = "", darkMode, toggleDark, onMob
             )}
 
             {!user ? (
-              <>
+              <div className="flex items-center gap-2">
                 <Link href="/login">
-                  <motion.div whileTap={{ scale: 0.95 }}>
-                    <Button variant="ghost" size="sm" className="font-semibold text-xs sm:text-sm text-gray-700 dark:text-gray-300 px-2.5 sm:px-3">Log in</Button>
+                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}>
+                    <button className="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-700 text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-200 hover:text-gray-950 dark:hover:text-white hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800/60 shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer">
+                      <LogIn size={13} className="text-gray-500 dark:text-gray-400" />
+                      <span>Log in</span>
+                    </button>
                   </motion.div>
                 </Link>
                 <Link href="/register">
-                  <motion.div whileTap={{ scale: 0.95 }}>
-                    <Button size="sm" className="bg-[#2E3192] hover:bg-[#2E3192]/90 font-semibold shadow-xs text-xs sm:text-sm px-3">Sign up</Button>
+                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}>
+                    <button className="px-5 py-2 rounded-full bg-gradient-to-r from-indigo-600 via-[#2E3192] to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs sm:text-sm shadow-md shadow-indigo-600/30 hover:shadow-indigo-600/50 transition-all flex items-center gap-1.5 cursor-pointer">
+                      <UserPlus size={13} />
+                      <span>Sign up</span>
+                    </button>
                   </motion.div>
                 </Link>
-              </>
+              </div>
             ) : (
               <div className="flex items-center gap-1.5 sm:gap-2">
                 {/* Plus button for New Listing on dashboard */}
