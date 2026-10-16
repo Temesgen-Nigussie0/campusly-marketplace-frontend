@@ -203,39 +203,33 @@ function MarketplaceFeedInner() {
           </div>
         </div>
 
-        {/* Hero Section Container */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
-          {/* Dynamic Featured Hero Carousel (Changes every 4 seconds) */}
-          <FeaturedHero
-            products={products.length > 0 ? products : MOCK_PRODUCTS}
-            onScrollToMaterials={scrollToMaterials}
-          />
-        </section>
+        {/* Main Content Area */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 sm:pt-3 pb-16">
+          {/* Dynamic Slim Wide-Strip Featured Hero Banner (Changes every 4 seconds) */}
+          <FeaturedHero products={products.length > 0 ? products : MOCK_PRODUCTS} />
 
-        {/* Marketplace Browse Section */}
-        <section id="materials-feed" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
-          <div className="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div className="space-y-1">
+          {/* Marketplace Browse Bar & Filters */}
+          <div id="materials-feed" className="mb-3 pt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl sm:text-3xl font-extrabold font-heading tracking-tight text-gray-900 dark:text-gray-100">
+                <h1 className="text-xl sm:text-2xl font-extrabold font-heading tracking-tight text-gray-900 dark:text-gray-100">
                   Academic Marketplace
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 dark:bg-indigo-950/60 text-[#2E3192] dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-800/40">
-                  {sorted.length} verified listings
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-50 dark:bg-indigo-950/60 text-[#2E3192] dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-800/40">
+                  {sorted.length} verified materials
                 </span>
               </div>
-              <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">
-                Discover lecture notes, course modules, past exam solutions, and video tutorials created by top students.
+              <p className="text-gray-500 dark:text-gray-400 text-xs hidden sm:block">
+                Lecture notes, modules, past exams & tutorials by verified Ethiopian university students
               </p>
             </div>
+
+            {/* Interactive Custom Filter Bar */}
+            <FilterBar filters={filters} onChange={setFilters} />
           </div>
 
-          {/* Interactive Custom Filter Bar */}
-          <FilterBar filters={filters} onChange={setFilters} />
-        </section>
-
-        {/* Product Cards Grid */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+          {/* Product Cards Grid */}
+          <div className="pt-2">
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {Array.from({ length: 8 }).map((_, i) => (
@@ -306,7 +300,8 @@ function MarketplaceFeedInner() {
               )}
             </>
           )}
-        </section>
+          </div>
+        </div>
       </main>
 
       <Footer />
