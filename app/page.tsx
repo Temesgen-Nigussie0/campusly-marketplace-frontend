@@ -203,11 +203,13 @@ function MarketplaceFeedInner() {
           </div>
         </div>
 
-        {/* Main Content Area */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 sm:pt-3 pb-16">
-          {/* Dynamic Slim Wide-Strip Featured Hero Banner (Changes every 4 seconds) */}
+        {/* Full-Width Stretched Hero Banner */}
+        <div className="w-full px-3 sm:px-5 lg:px-8 pt-2.5 pb-1 max-w-[1550px] mx-auto">
           <FeaturedHero products={products.length > 0 ? products : MOCK_PRODUCTS} />
+        </div>
 
+        {/* Main Content Area */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           {/* Marketplace Browse Bar & Filters */}
           <div id="materials-feed" className="mb-3 pt-1">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">

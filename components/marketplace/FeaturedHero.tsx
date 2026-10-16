@@ -66,78 +66,94 @@ export function FeaturedHero({ products }: FeaturedHeroProps) {
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-[#0c0e17] text-white shadow-xl shadow-indigo-950/20 border border-white/10 select-none transition-all my-3 sm:my-4"
+      className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-gray-950 text-white shadow-2xl shadow-black/40 border border-white/15 select-none transition-all"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* ── LOW OPACITY BACKGROUND IMAGE ── */}
+      {/* ── REAL LOW-OPACITY BACKGROUND IMAGE (VISIBLE, NOT COVERED BY DARK BLUE) ── */}
       <AnimatePresence mode="popLayout">
         <motion.div
           key={current.id + "-bg"}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.2 }}
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 0.48, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           className="absolute inset-0 bg-cover bg-center pointer-events-none"
           style={{ backgroundImage: `url(${bgImage})` }}
         />
       </AnimatePresence>
 
-      {/* ── GRADIENTS FOR HIGH CONTRAST & SLIM LOOK ── */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0c0e17] via-[#0c0e17]/95 to-[#0c0e17]/80 pointer-events-none" />
-      <div className="absolute -top-12 -left-12 w-64 h-64 bg-[#2E3192]/30 rounded-full blur-2xl pointer-events-none" />
-      <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-purple-600/20 rounded-full blur-2xl pointer-events-none" />
+      {/* ── DIAGONAL GRADIENT OVERLAY (STRETCHES DIAGONALLY FOR READABILITY & IMAGE VISIBILITY) ── */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/95 via-gray-950/70 to-black/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent pointer-events-none" />
 
-      {/* ── COMPACT HORIZONTAL BANNER CONTENT ── */}
-      <div className="relative z-10 px-4 py-3 sm:px-6 sm:py-4 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+      {/* ── HERO BANNER CONTENT ── */}
+      <div className="relative z-10 px-5 py-5 sm:px-8 sm:py-7 lg:px-10 min-h-[210px] sm:min-h-[230px] flex flex-col justify-between gap-4">
         
-        {/* Left Side: Meta tags, Title, and Habesha Student Seller info */}
-        <div className="flex-1 min-w-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current.id + "-content"}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-1.5"
-            >
-              {/* Badges row */}
-              <div className="flex items-center gap-2 flex-wrap text-xs">
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/15 text-amber-300 border border-amber-400/30">
-                  <Sparkles size={11} className="text-amber-400" />
-                  <span>Featured Material</span>
-                </span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 text-gray-200 border border-white/15">
-                  {current.category}
-                </span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
-                  {current.productType}
-                </span>
-                {current.rating && (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-400">
-                    <Star size={11} fill="currentColor" />
-                    <span>{current.rating}</span>
-                  </span>
-                )}
-                <span className="text-[10px] text-gray-400 font-mono ml-auto md:ml-0">
-                  0{currentIndex + 1} / 0{featured.length}
-                </span>
-              </div>
+        {/* Top Meta Bar */}
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/40 backdrop-blur-md shadow-sm">
+              <Sparkles size={12} className="text-amber-400" />
+              <span>Featured Highlight</span>
+            </span>
+            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/15 text-white border border-white/20 backdrop-blur-md">
+              {current.category}
+            </span>
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/25 text-indigo-200 border border-indigo-400/30">
+              {current.productType}
+            </span>
+            {current.rating && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/40 text-xs font-bold text-amber-400 border border-white/10">
+                <Star size={12} fill="currentColor" />
+                <span>{current.rating}</span>
+                <span className="text-gray-400 font-normal hidden sm:inline">({current.reviewCount || 30} reviews)</span>
+              </span>
+            )}
+          </div>
 
-              {/* Title: 1 clean bold line */}
-              <h2 className="text-sm sm:text-base md:text-lg font-bold font-heading text-white truncate max-w-2xl leading-snug">
-                {current.title}
-              </h2>
+          {/* Slide counter & pause note */}
+          <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-gray-300">
+            {isPaused && (
+              <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded-full text-gray-200 font-sans">
+                Paused
+              </span>
+            )}
+            <span className="text-white">0{currentIndex + 1}</span>
+            <span className="text-gray-500">/</span>
+            <span className="text-gray-400">0{featured.length}</span>
+          </div>
+        </div>
 
-              {/* Habesha Student Seller Row */}
-              <div className="flex items-center gap-2 sm:gap-3 flex-wrap text-xs pt-0.5">
-                <div className="flex items-center gap-1.5">
+        {/* Middle: Title, Excerpt, Habesha Student info, and Action row */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          
+          {/* Left Column: Heading, Description, Seller Details */}
+          <div className="lg:col-span-8 space-y-2.5">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current.id + "-title-block"}
+                initial={{ opacity: 0, x: direction * 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction * -15 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-2"
+              >
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-extrabold font-heading text-white line-clamp-2 leading-snug drop-shadow-sm">
+                  {current.title}
+                </h2>
+
+                <p className="text-gray-200 text-xs sm:text-sm line-clamp-1 max-w-2xl drop-shadow-xs">
+                  {current.description}
+                </p>
+
+                {/* Habesha Student Seller Pill */}
+                <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-black/45 border border-white/20 backdrop-blur-md shadow-sm">
                   <div className="relative">
                     <img
                       src={current.seller.avatar || "/default-avatar.svg"}
                       alt={current.seller.name}
-                      className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border border-indigo-400"
+                      className="w-7 h-7 rounded-full object-cover border border-white/40"
                     />
                     {current.seller.isVerified && (
                       <div className="absolute -bottom-0.5 -right-0.5">
@@ -145,91 +161,99 @@ export function FeaturedHero({ products }: FeaturedHeroProps) {
                       </div>
                     )}
                   </div>
-                  <span className="font-bold text-gray-200 text-xs">
-                    {current.seller.name}
-                  </span>
-                  {current.seller.isVerified ? (
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-sky-500/20 text-sky-300">
-                      Verified
+
+                  <div className="flex items-center gap-2 flex-wrap text-xs">
+                    <span className="font-bold text-white">
+                      {current.seller.name}
                     </span>
-                  ) : (
-                    <span className="text-[10px] text-gray-400">
-                      Student
-                    </span>
-                  )}
+                    
+                    {current.seller.isVerified ? (
+                      <span className="px-2 py-0.2 rounded-full text-[10px] font-bold bg-sky-500/25 text-sky-300 border border-sky-400/40">
+                        Verified Student
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-gray-300">
+                        Student
+                      </span>
+                    )}
+
+                    {current.seller.university && (
+                      <span className="text-gray-300 text-[11px] hidden sm:inline">
+                        • {current.seller.university.split("(")[0].trim()}
+                      </span>
+                    )}
+
+                    {current.seller.listingsCount && current.seller.listingsCount > 1 && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30">
+                        <Layers size={10} />
+                        <span>{current.seller.listingsCount} listings</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
-
-                {current.seller.university && (
-                  <span className="text-gray-400 text-[11px] hidden sm:inline">
-                    • {current.seller.university.split("(")[0].trim()}
-                  </span>
-                )}
-
-                {current.seller.listingsCount && current.seller.listingsCount > 1 && (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-950/80 text-indigo-300 border border-indigo-700/50">
-                    <Layers size={10} />
-                    <span>{current.seller.listingsCount} listings</span>
-                  </span>
-                )}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Right Side: Price, CTA, Carousel Controls in a compact row */}
-        <div className="flex items-center justify-between md:justify-end gap-3 sm:gap-4 flex-shrink-0 pt-1 md:pt-0 border-t md:border-t-0 border-white/10">
-          {/* Price */}
-          <div className="text-left md:text-right">
-            <span className="text-[9px] uppercase tracking-wider text-gray-400 font-bold block leading-none">Price</span>
-            <span className="text-base sm:text-lg font-extrabold text-amber-300 font-heading">
-              {formatPrice(current.price)}
-            </span>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Rounded CTA Button to open product */}
-          <Link
-            href={`/product/${current.id}`}
-            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-indigo-500 via-[#2E3192] to-indigo-700 hover:from-indigo-400 hover:to-indigo-600 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md shadow-indigo-600/30 hover:scale-105 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
-          >
-            <span>Open Material</span>
-            <ArrowRight size={14} />
-          </Link>
+          {/* Right Column: Price & Rounded CTA Button */}
+          <div className="lg:col-span-4 flex items-center justify-between lg:justify-end gap-4 flex-shrink-0 pt-2 lg:pt-0 border-t lg:border-t-0 border-white/10">
+            {/* Price */}
+            <div className="flex flex-col text-left lg:text-right">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400">Student Price</span>
+              <span className="text-xl sm:text-2xl font-extrabold text-amber-300 font-heading">
+                {formatPrice(current.price)}
+              </span>
+            </div>
 
-          {/* Mini Nav Controls */}
-          <div className="flex items-center gap-1 pl-1 border-l border-white/15">
-            <button
-              onClick={prevSlide}
-              aria-label="Previous"
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer"
+            {/* Rounded CTA Button to open product */}
+            <Link
+              href={`/product/${current.id}`}
+              className="px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 via-[#2E3192] to-indigo-700 hover:from-indigo-400 hover:to-indigo-600 text-white font-bold text-sm sm:text-base flex items-center gap-2 shadow-lg shadow-indigo-600/40 hover:scale-105 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
             >
-              <ChevronLeft size={14} />
-            </button>
-            <button
-              onClick={nextSlide}
-              aria-label="Next"
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer"
-            >
-              <ChevronRight size={14} />
-            </button>
+              <span>Open Material</span>
+              <ArrowRight size={16} />
+            </Link>
+
+            {/* Next / Prev Rounded Buttons */}
+            <div className="flex items-center gap-1.5 pl-2 border-l border-white/20">
+              <button
+                onClick={prevSlide}
+                aria-label="Previous featured"
+                className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-md"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={nextSlide}
+                aria-label="Next featured"
+                className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-md"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
           </div>
+
         </div>
 
       </div>
 
-      {/* Slim 4-second progress indicator bar at the bottom */}
-      <div className="h-1 w-full bg-white/10 flex">
-        {featured.map((item, idx) => (
-          <button
-            key={item.id}
-            onClick={() => goToSlide(idx)}
-            className={`h-full flex-1 transition-all duration-300 cursor-pointer ${
-              idx === currentIndex
-                ? "bg-indigo-500"
-                : "bg-transparent hover:bg-white/20"
-            }`}
-            title={item.title}
-          />
-        ))}
+      {/* ── 4-SECOND PROGRESS INDICATOR TABS AT BOTTOM ── */}
+      <div className="h-1.5 w-full bg-white/15 flex">
+        {featured.map((item, idx) => {
+          const isActive = idx === currentIndex;
+          return (
+            <button
+              key={item.id}
+              onClick={() => goToSlide(idx)}
+              className={`h-full flex-1 transition-all duration-300 cursor-pointer ${
+                isActive
+                  ? "bg-amber-400 shadow-sm"
+                  : "bg-transparent hover:bg-white/25"
+              }`}
+              title={item.title}
+            />
+          );
+        })}
       </div>
     </div>
   );
