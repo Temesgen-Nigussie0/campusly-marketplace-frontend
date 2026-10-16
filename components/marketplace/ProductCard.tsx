@@ -3,7 +3,18 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FileText, Video, BookOpen, ClipboardList, Play, Star, User } from "lucide-react";
+import {
+  FileText,
+  Video,
+  BookOpen,
+  ClipboardList,
+  Play,
+  Star,
+  User,
+  GraduationCap,
+  Layers,
+  ArrowUpRight
+} from "lucide-react";
 import { Product, ProductType } from "@/lib/types";
 import { VerifiedBadge } from "@/components/shared/VerifiedBadge";
 import { useAuth } from "@/contexts/AuthContext";
@@ -35,21 +46,20 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/product/${product.id}`} className="group block h-full">
       <motion.article
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
-        className={`bg-white dark:bg-[#18181C] border rounded-2xl overflow-hidden transition-colors duration-200 h-full flex flex-col relative ${
+        whileHover={{ y: -5, transition: { duration: 0.2 } }}
+        className={`bg-white dark:bg-[#18181C] border rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-300 h-full flex flex-col relative shadow-sm hover:shadow-xl hover:shadow-indigo-950/10 dark:hover:shadow-indigo-500/5 ${
           isMine
             ? "border-[#2E3192]/60 ring-2 ring-[#2E3192]/20 dark:ring-[#2E3192]/30 bg-gradient-to-b from-[#2E3192]/[0.03] via-white to-white dark:via-[#18181C] dark:to-[#18181C]"
-            : "border-[#E5E5E0] dark:border-[#26282E] hover:border-[#2E3192]/40 shadow-2xs hover:shadow-md"
+            : "border-[#E5E5E0] dark:border-[#26282E] hover:border-[#2E3192]/50"
         }`}
       >
         {/* Fixed 16:9 Thumbnail Image Block */}
-        <div className="relative aspect-[16/9] bg-slate-100 dark:bg-gray-800 overflow-hidden flex-shrink-0">
+        <div className="relative aspect-[16/10] sm:aspect-[16/9] bg-slate-100 dark:bg-gray-800 overflow-hidden flex-shrink-0">
           {hasImage ? (
             <img
               src={product.images[0]}
               alt={product.title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-indigo-50/50 dark:bg-gray-800">
@@ -57,77 +67,136 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
 
+          {/* Vignette / Bottom Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+
           {/* Video play overlay */}
           {product.productType === "video-lecture" && hasImage && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/60 backdrop-blur-xs flex items-center justify-center">
-                <Play size={14} fill="white" className="text-white ml-0.5" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-transform duration-200 group-hover:scale-110">
+                <Play size={16} fill="white" className="text-white ml-0.5" />
               </div>
             </div>
           )}
 
           {/* Category Pill with Backdrop Blur Overlay */}
-          <div className="absolute top-2 left-2 sm:top-2.5 sm:left-2.5 z-10">
-            <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-wider backdrop-blur-md bg-black/50 border border-white/20 shadow-2xs">
+          <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5 flex-wrap">
+            <span className="px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-wider backdrop-blur-md bg-black/55 border border-white/20 shadow-xs">
               {productTypeLabels[product.productType]}
             </span>
           </div>
 
           {/* Top Right Badges: Your Listing / Featured */}
-          <div className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 flex flex-col items-end gap-1 z-10">
+          <div className="absolute top-2.5 right-2.5 flex flex-col items-end gap-1 z-10">
             {isMine && (
-              <span className="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold leading-tight bg-[#2E3192] text-white shadow-2xs border border-indigo-400/30">
-                <User size={9} className="text-white" />
-                <span className="hidden sm:inline">Your Listing</span>
-                <span className="sm:hidden">Mine</span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-bold leading-tight bg-[#2E3192] text-white shadow-md border border-indigo-400/30">
+                <User size={10} className="text-white" />
+                <span>Your Listing</span>
               </span>
             )}
             {product.isFeatured && (
-              <span className="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-[#F5A623] text-gray-900 shadow-2xs border border-amber-300/30">
-                <Star size={9} fill="currentColor" />
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-bold bg-[#F5A623] text-gray-950 shadow-md border border-amber-300/40">
+                <Star size={10} fill="currentColor" />
                 <span>Featured</span>
+              </span>
+            )}
+          </div>
+
+          {/* Bottom rating & department overlay */}
+          <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white/90 z-10 text-[10px] font-medium">
+            <span className="truncate max-w-[70%] font-semibold tracking-wide text-white drop-shadow-sm">
+              {product.department || product.category}
+            </span>
+            {product.rating && (
+              <span className="flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-black/50 backdrop-blur-md text-amber-300 border border-white/10 text-[10px] font-bold flex-shrink-0">
+                <Star size={10} fill="currentColor" />
+                <span>{product.rating}</span>
               </span>
             )}
           </div>
         </div>
 
         {/* Card Body */}
-        <div className="p-3 sm:p-4 flex flex-col flex-1 justify-between gap-2">
+        <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between gap-3">
           <div>
             {/* Category tag */}
-            <p className="text-[10px] sm:text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-0.5">
-              {product.category}
-            </p>
+            <div className="flex items-center justify-between gap-1 mb-1">
+              <span className="text-[10px] sm:text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
+                {product.category}
+              </span>
+              {product.seller.university && (
+                <span className="text-[10px] text-gray-400 dark:text-gray-500 truncate max-w-[120px]">
+                  {product.seller.university.split("(")[0].trim()}
+                </span>
+              )}
+            </div>
 
             {/* Title - Clean 2-line clamp */}
-            <h3 className="text-xs sm:text-sm font-bold font-heading text-gray-900 dark:text-gray-100 leading-snug line-clamp-2 group-hover:text-[#2E3192] transition-colors">
+            <h3 className="text-xs sm:text-[13px] md:text-sm font-bold font-heading text-gray-900 dark:text-gray-100 leading-snug line-clamp-2 group-hover:text-[#2E3192] dark:group-hover:text-indigo-400 transition-colors">
               {product.title}
             </h3>
           </div>
 
-          {/* Price + Seller Row */}
-          <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-[#E5E5E0] dark:border-[#26282E]">
-            {/* Seller Info */}
-            <div className="flex items-center gap-1.5 min-w-0 flex-1">
-              <img
-                src={product.seller.avatar || "/default-avatar.svg"}
-                alt={product.seller.username}
-                className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border border-gray-200 dark:border-gray-700 flex-shrink-0"
-              />
-              <div className="flex items-center gap-0.5 sm:gap-1 min-w-0">
-                <span className="text-[10px] sm:text-xs font-semibold text-gray-600 dark:text-gray-400 truncate">
-                  @{product.seller.username}
-                </span>
-                {product.seller.isVerified && (
-                  <VerifiedBadge isVerified={true} showText={false} size="sm" />
-                )}
+          {/* Habesha Student Seller Section */}
+          <div className="pt-2.5 border-t border-[#E5E5E0] dark:border-[#26282E]/80 flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-2">
+              {/* Seller details */}
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <div className="relative flex-shrink-0">
+                  <img
+                    src={product.seller.avatar || "/default-avatar.svg"}
+                    alt={product.seller.name || product.seller.username}
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border-2 border-indigo-100 dark:border-indigo-900/60 shadow-2xs"
+                  />
+                  {product.seller.isVerified && (
+                    <div className="absolute -bottom-1 -right-1">
+                      <VerifiedBadge isVerified={true} showText={false} size="sm" />
+                    </div>
+                  )}
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">
+                      {product.seller.name}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[10px] text-gray-500 dark:text-gray-400">
+                    <span className="truncate">@{product.seller.username}</span>
+                  </div>
+                </div>
               </div>
+
+              {/* Multiple listings indicator */}
+              {product.seller.listingsCount && product.seller.listingsCount > 1 ? (
+                <span
+                  title={`${product.seller.name} has ${product.seller.listingsCount} active listings`}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60 flex-shrink-0"
+                >
+                  <Layers size={10} className="text-indigo-600 dark:text-indigo-400" />
+                  <span>{product.seller.listingsCount} listings</span>
+                </span>
+              ) : (
+                <span className="text-[10px] text-gray-400 dark:text-gray-500 flex-shrink-0">
+                  1 listing
+                </span>
+              )}
             </div>
 
-            {/* Price Bold in Indigo */}
-            <span className="text-xs sm:text-base font-bold text-[#2E3192] dark:text-indigo-400 font-heading flex-shrink-0 ml-1.5">
-              {formatPrice(product.price)}
-            </span>
+            {/* Bottom Row: Price & Rounded CTA Button */}
+            <div className="flex items-center justify-between pt-2 border-t border-dashed border-gray-100 dark:border-gray-800">
+              <div className="flex flex-col">
+                <span className="text-[9px] uppercase tracking-wider text-gray-400 font-bold">Price</span>
+                <span className="text-sm sm:text-base font-extrabold text-[#2E3192] dark:text-indigo-400 font-heading">
+                  {formatPrice(product.price)}
+                </span>
+              </div>
+
+              <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-gray-100 hover:bg-[#2E3192] text-gray-800 hover:text-white dark:bg-gray-800 dark:hover:bg-indigo-600 dark:text-gray-200 dark:hover:text-white transition-all duration-200 group-hover:bg-[#2E3192] group-hover:text-white">
+                <span>View</span>
+                <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </div>
+            </div>
           </div>
         </div>
       </motion.article>

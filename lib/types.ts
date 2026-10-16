@@ -23,6 +23,8 @@ export interface User {
   role: UserRole;
   isVerified: boolean;
   memberSince: string;
+  listingsCount?: number;
+  university?: string;
 }
 
 export interface Product {
@@ -39,6 +41,9 @@ export interface Product {
   rejectionReason?: string;
   isFeatured?: boolean;
   reportCount?: number;
+  rating?: number;
+  reviewCount?: number;
+  department?: string;
 }
 
 export interface FilterState {

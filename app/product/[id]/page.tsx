@@ -29,6 +29,7 @@ import { useTheme } from "@/components/layout/ThemeProvider";
 import { Spinner } from "@/components/ui/Spinner";
 import { formatPrice, formatDate } from "@/lib/utils";
 import { API_BASE_URL } from "@/lib/api";
+import { MOCK_PRODUCTS } from "@/lib/mockData";
 
 const productTypeLabels: Record<string, string> = {
   module: "Module",
@@ -89,10 +90,58 @@ export default function ProductDetailPage() {
         if (res.ok) {
           setProduct(await res.json());
         } else {
-          setProduct(null);
+          const mock = MOCK_PRODUCTS.find((p) => p.id === id);
+          if (mock) {
+            setProduct({
+              id: mock.id,
+              title: mock.title,
+              description: mock.description,
+              price: mock.price,
+              status: mock.status,
+              created_at: mock.createdAt,
+              category: { id: "c1", name: mock.category },
+              productType: { id: "pt1", name: mock.productType },
+              images: mock.images.map((url, idx) => ({ id: `img-${idx}`, image_url: url })),
+              seller: {
+                id: mock.seller.id,
+                profile: {
+                  name: mock.seller.name,
+                  username: mock.seller.username,
+                  avatar_url: mock.seller.avatar,
+                  is_verified: mock.seller.isVerified,
+                },
+              },
+            });
+          } else {
+            setProduct(null);
+          }
         }
       } catch {
-        setProduct(null);
+        const mock = MOCK_PRODUCTS.find((p) => p.id === id);
+        if (mock) {
+          setProduct({
+            id: mock.id,
+            title: mock.title,
+            description: mock.description,
+            price: mock.price,
+            status: mock.status,
+            created_at: mock.createdAt,
+            category: { id: "c1", name: mock.category },
+            productType: { id: "pt1", name: mock.productType },
+            images: mock.images.map((url, idx) => ({ id: `img-${idx}`, image_url: url })),
+            seller: {
+              id: mock.seller.id,
+              profile: {
+                name: mock.seller.name,
+                username: mock.seller.username,
+                avatar_url: mock.seller.avatar,
+                is_verified: mock.seller.isVerified,
+              },
+            },
+          });
+        } else {
+          setProduct(null);
+        }
       } finally {
         setLoading(false);
       }
