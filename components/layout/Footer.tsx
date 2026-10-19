@@ -85,7 +85,17 @@ export function Footer() {
         {/* Bottom Copyright Row */}
         <div className="border-t border-[#282A44] mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#A0A0AC]">
           <p>© {new Date().getFullYear()} Campusly Academic Marketplace. All rights reserved.</p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap justify-center">
+            <a
+              href="https://bytemesgen.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#A0A0AC] hover:text-[#F5A623] transition-colors font-medium inline-flex items-center gap-1"
+            >
+              <span>Made by</span>
+              <span className="text-[#F5A623] hover:underline font-semibold">Temesgen</span>
+            </a>
+            <span>•</span>
             <span className="hover:text-white transition-colors">Built for Universities</span>
             <span>•</span>
             <span className="hover:text-white transition-colors">Moderated & Verified</span>
